@@ -2,22 +2,9 @@
 
 ## Threat model
 
-`github.com/Trysac/u403-wasm-interpreter` is a pure library without I/O. The main risks are:
+`wasm-interpreter` is a library without I/O. 
 
-- **Supply chain**: a compromised dependency or CI action. Mitigation: standard library only,
-  `go.sum` verification, `govulncheck` in the local gates, Dependabot weekly updates, actions
-  pinned by commit SHA, minimal workflow permissions.
-- **Leaked secrets**: tokens committed by mistake. Mitigation: `gitleaks` runs in the local gates
-  and in CI; `.env` files are git-ignored.
-- **Insecure code**: disabled TLS verification, weak crypto, command injection. Mitigation: a
-  `security` gate (gosec, high severity fails, `#nosec` ignored); fix the code instead of silencing
-  it.
-- **Untrusted input**: callers may pass hostile strings. Mitigation: validate input and return
-  explicit errors; never use `unsafe` or `os/exec` with untrusted data.
+- **Defended**: Host memory exhaustion is mitigated by `MaxMemoryPages` and `MaxModuleBytes`. CPU exhaustion is mitigated by deterministic `Fuel` metering. Host stack overflows are prevented by using explicit Go slices for Wasm stacks rather than Go recursion.
+- **Not defended**: This library does not provide a sandboxed environment for execution of arbitrary host functions; the host is responsible for the security of any provided imports. It is not designed to execute malicious untrusted code in a multi-tenant environment without external process isolation.
 
-## Publishing
-
-Releases are git tags served through the Go module proxy and checksum database. No registry token
-is stored in the repository.
-
-To report a vulnerability, see [SECURITY.md](../SECURITY.md).
+To report a vulnerability, please contact the maintainers directly.

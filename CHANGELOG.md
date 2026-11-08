@@ -9,4 +9,5 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Add pure Go WebAssembly MVP interpreter with fuel metering and sandboxed linear memory.
 - Initial project structure from the factory utility template.
