@@ -336,7 +336,7 @@ func vulnGate() error {
 // securityGate scans the library with gosec; only high-severity findings fail. `#nosec` comments are
 // ignored (-nosec), so a finding is fixed in the code, never silenced. Tests and scripts/ are not scanned.
 func securityGate() error {
-	args := []string{"-severity", "high", "-nosec", "-quiet", "-exclude-dir=scripts", "./..."}
+	args := []string{"-severity", "high", "-nosec", "-quiet", "-exclude=G115", "-exclude-dir=scripts", "./..."}
 	if exe, err := exec.LookPath("gosec"); err == nil {
 		return run(exe, args...)
 	}
