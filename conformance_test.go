@@ -8,8 +8,6 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
-
-	"github.com/Trysac/u403-wasm-interpreter"
 )
 
 type WastCommand struct {
